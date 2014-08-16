@@ -31,8 +31,10 @@ public class SphinxClientTest1 {
         client.SetLimits(0, 100);
         client.SetMaxQueryTime(3000);
 
-        //执行查询,关键字: 茶叶 , 在名为test1的索引上
-        SphinxResult result = client.Query("茶叶", "test1");
+        client.SetFilter("group_id",2,true);
+
+        //执行查询,关键字: 报道 , 在名为test的索引上
+        SphinxResult result = client.Query("报道", "test");
 
         //输出匹配项
         SphinxMatch[] matches = result.matches;
