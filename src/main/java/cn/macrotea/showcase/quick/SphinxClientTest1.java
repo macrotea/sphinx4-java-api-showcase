@@ -9,12 +9,14 @@ import org.sphx.api.SphinxResult;
  * @author macrotea@qq.com
  * @since 2014-8-5 上午9:08
  */
-public class App {
+public class SphinxClientTest1 {
 
     // NOTICE macrotea@qq.com 2014-08-16 14:27:36 代码运行前配置好环境
     // 更多的环境配置视频请访问: http://macrotea.com/tevi
-    //coolseek
-    //github 搜索 SphinxClient
+    // coreseek
+    // github 搜索 SphinxClient
+
+
     public static void main(String[] args) throws SphinxException {
         String host = "127.0.0.1";
         int port = 9312;
@@ -24,20 +26,20 @@ public class App {
         SphinxClient client = new SphinxClient();
         client.SetServer(host, port);
         client.SetMatchMode(mode);
-        //理解为分页
-        client.SetLimits(0, 10);
+
+        //设置搜索返回结果,若超过100行,仅仅返回100行以内的文档
+        client.SetLimits(0, 100);
         client.SetMaxQueryTime(3000);
 
-        //执行搜索，第一个参数是关键字，第二个参数是索引
-        SphinxResult result = client.Query("测试", "*");
-        SphinxMatch[] matches = result.matches;
+        //执行查询,关键字: 茶叶 , 在名为test1的索引上
+        SphinxResult result = client.Query("茶叶", "test1");
 
+        //输出匹配项
+        SphinxMatch[] matches = result.matches;
         for (SphinxMatch match : matches) {
-            System.out.println(match.docId);
+            System.out.println(String.format("doc:%s weight:%s attrValues:%s",match.docId,match.weight,match.attrValues));
         }
 
-
-        //88 thanks
     }
 
 }
